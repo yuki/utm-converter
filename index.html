@@ -27,19 +27,17 @@
 
   <div class="container mt-3">
     <main>
-        <form>
-            <div class="mb-3">
-              <label for="zona" class="form-label">Elige Zona</label>
-              <select id="zona" class="form-select form-select-lg mb-3" aria-label="Small select example">
-              </select>
-            </div>
+        <div class="mb-3">
+          <label for="zona" class="form-label">Elige Zona</label>
+          <select id="zona" class="form-select form-select-lg mb-3" aria-label="Small select example">
+          </select>
+        </div>
 
-            <div class="mb-3">
-                <label for="coordenadas" class="form-label">Introduce coordenadas</label>
-                <textarea class="form-control" id="coordenadas" rows="6"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" onclick="convertir()">Submit</button>
-        </form>
+        <div class="mb-3">
+            <label for="coordenadas" class="form-label">Introduce coordenadas</label>
+            <textarea class="form-control" id="coordenadas" rows="6"></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="convertir()">Submit</button>
 
         <div id="resultados" class="mt-5">
             <h1>Resultado</h1>
@@ -62,20 +60,20 @@
         }
       
         function convertir(){
-            resultado = document.getElementById('resultado')
-            texto = document.getElementById('coordenadas').value
-            filas = texto.split("\n")
-            var zona = document.getElementById("zona").selectedIndex+1
-            resultado.textContent = ""
+          resultado = document.getElementById('resultado')
+          texto = document.getElementById('coordenadas').value
+          filas = texto.split("\n")
+          var zona = document.getElementById("zona").selectedIndex+1
+          resultado.textContent = ""
 
-            for (let i = 0; i < filas.length; i++) {
-                fila = filas[i];
-                coordenadas = fila.split("\t")
-                a = new UTMConv.UTMCoords(zona, coordenadas[0],coordenadas[1])
-                p = document.createElement("p")
-                p.innerHTML = a.to_deg().latd+","+a.to_deg().lngd
-                resultado.append(p)
-            }
+          for (let i = 0; i < filas.length; i++) {
+              fila = filas[i];
+              coordenadas = fila.split("\t")
+              a = new UTMConv.UTMCoords(zona, coordenadas[0],coordenadas[1])
+              p = document.createElement("p")
+              p.innerHTML = a.to_deg().latd+","+a.to_deg().lngd
+              resultado.append(p)
+          }
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
