@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UTM Converter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="js/utmconv.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#titulo" aria-controls="titulo" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-md-center" id="titulo">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"><h1 class="text-white">UTM converter</h1></a>
+          </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <main>
+        <form>
+            <div class="mb-3">
+              <label for="zona" class="form-label">Elige Zona</label>
+              <select id="zona" class="form-select form-select-lg mb-3" aria-label="Small select example">
+              </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="coordenadas" class="form-label">Introduce coordenadas</label>
+                <textarea class="form-control" id="coordenadas" rows="6"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="convertir()">Submit</button>
+        </form>
+
+        <div id="resultados" class="mt-5">
+            <h1>Resultado</h1>
+            <div id="resultado">
+
+            </div>
+        </div>
+    </main>
+  </div>
+  
+    <script>
+        var x = document.getElementById("zona");
+        for (let i = 1; i < 60; i++) {
+          var option = document.createElement("option");
+          option.text = i;
+          if (i == 30){
+            option.selected = true
+          }
+          x.add(option)
+        }
+      
+        function convertir(){
+            resultado = document.getElementById('resultado')
+            texto = document.getElementById('coordenadas').value
+            filas = texto.split("\n")
+            var zona = document.getElementById("zona").selectedIndex+1
+            resultado.textContent = ""
+
+            for (let i = 0; i < filas.length; i++) {
+                fila = filas[i];
+                coordenadas = fila.split("\t")
+                a = new UTMConv.UTMCoords(zona, coordenadas[0],coordenadas[1])
+                p = document.createElement("p")
+                p.innerHTML = a.to_deg().latd+","+a.to_deg().lngd
+                resultado.append(p)
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
